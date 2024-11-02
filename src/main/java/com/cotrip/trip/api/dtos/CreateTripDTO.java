@@ -1,15 +1,18 @@
-package com.cotrip.trip.application.usecases;
+package com.cotrip.trip.api.dtos;
 
-import an.awesome.pipelinr.Command;
-import com.cotrip.trip.domain.viewmodels.IdResponse;
+import jakarta.validation.constraints.NotBlank;
 
-public class CreateTripCommand implements Command<IdResponse> {
+public class CreateTripDTO {
+    @NotBlank(message = "Origin is mandatory")
     private String origin;
+    @NotBlank(message = "Destination is mandatory")
     private String destination;
+    @NotBlank(message = "Start date is mandatory")
     private String startDate;
+    @NotBlank(message = "End date is mandatory")
     private String endDate;
 
-    public CreateTripCommand(String origin, String destination, String startDate, String endDate) {
+    public CreateTripDTO(String origin, String destination, String startDate, String endDate) {
         this.origin = origin;
         this.destination = destination;
         this.startDate = startDate;

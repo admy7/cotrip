@@ -1,7 +1,7 @@
 package com.cotrip.trip.infrastructure.persistence;
 
 import com.cotrip.trip.application.ports.TripRepository;
-import com.cotrip.trip.domain.Trip;
+import com.cotrip.trip.domain.models.Trip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,5 +20,10 @@ public class InMemoryTripRepository implements TripRepository {
         return trips.stream()
                 .filter(trip -> trip.getId().equals(id))
                 .findFirst();
+    }
+
+    @Override
+    public void deleteAll() {
+        trips.clear();
     }
 }

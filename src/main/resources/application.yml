@@ -1,0 +1,15 @@
+spring:
+    application:
+        name: cotrip-backend
+    mvc:
+        servlet:
+          path: /api/v1
+    datasource:
+        url: jdbc:postgresql://localhost:5432/db
+        username: cotrip
+        password: cotrip
+        driver-class-name: org.postgresql.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
