@@ -1,7 +1,5 @@
 package com.cotrip.core.api;
 
-import java.util.List;
-
 public class ErrorResponse {
     private int status;
     private String message;

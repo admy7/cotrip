@@ -4,10 +4,12 @@ import com.cotrip.trip.application.ports.TripRepository;
 import com.cotrip.trip.domain.models.Trip;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 
+@Transactional
 public class SqlTripRepository implements TripRepository {
     private final EntityManager entityManager;
 
@@ -16,20 +18,22 @@ public class SqlTripRepository implements TripRepository {
     }
 
     @Override
-    @Transactional
     public void save(Trip trip) {
         entityManager.persist(trip);
     }
 
     @Override
-    public Optional<Trip> findById(String id) {
-        return Optional.of(entityManager.find(Trip.class, id));
+    public void update(Trip trip) {
+        entityManager.merge(trip);
     }
 
     @Override
-    @Transactional
+    public Optional<Trip> findById(String id) {
+        return Optional.ofNullable(entityManager.find(Trip.class, id));
+    }
+
+    @Override
     public void deleteAll() {
         entityManager.createQuery("DELETE FROM Trip").executeUpdate();
     }
-
 }

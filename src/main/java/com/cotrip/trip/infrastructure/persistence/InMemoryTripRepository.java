@@ -16,6 +16,12 @@ public class InMemoryTripRepository implements TripRepository {
     }
 
     @Override
+    public void update(Trip trip) {
+        trips.removeIf(t -> t.getId().equals(trip.getId()));
+        trips.add(trip);
+    }
+
+    @Override
     public Optional<Trip> findById(String id) {
         return trips.stream()
                 .filter(trip -> trip.getId().equals(id))

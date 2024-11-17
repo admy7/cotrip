@@ -1,4 +1,4 @@
-package com.cotrip.trip.e2e;
+package com.cotrip.trip.api;
 
 import com.cotrip.CotripBackendApplication;
 import com.cotrip.core.api.ErrorResponse;
@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Import(CotripBackendApplication.class)
-public class CreateTripE2ETest {
+public class CreateTripCommandE2ETest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,10 +60,10 @@ public class CreateTripE2ETest {
 
         var foundTrip = tripRepository.findById(idResponse.getId()).get();
 
-        Assert.assertEquals(foundTrip.getOrigin(), dto.getOrigin());
-        Assert.assertEquals(foundTrip.getDestination(), dto.getDestination());
-        Assert.assertEquals(foundTrip.getStartDate().toString(), dto.getStartDate());
-        Assert.assertEquals(foundTrip.getEndDate().toString(), dto.getEndDate());
+        Assert.assertEquals(foundTrip.getOrigin(), dto.origin());
+        Assert.assertEquals(foundTrip.getDestination(), dto.destination());
+        Assert.assertEquals(foundTrip.getStartDate().toString(), dto.startDate());
+        Assert.assertEquals(foundTrip.getEndDate().toString(), dto.endDate());
     }
 
     @Test

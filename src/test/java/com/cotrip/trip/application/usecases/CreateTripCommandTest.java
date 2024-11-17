@@ -1,4 +1,4 @@
-package com.cotrip.trip.usecases;
+package com.cotrip.trip.application.usecases;
 
 import com.cotrip.trip.application.ports.TripRepository;
 import com.cotrip.trip.application.usecases.CreateTripCommand;
@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CreateTripTest {
+public class CreateTripCommandTest {
     TripRepository tripRepository = new InMemoryTripRepository();
 
     @BeforeEach
@@ -34,10 +34,10 @@ public class CreateTripTest {
         var savedTrip = savedTripQuery.get();
 
         Assert.assertEquals(savedTrip.getId(), response.getId());
-        Assert.assertEquals(savedTrip.getOrigin(), command.getOrigin());
-        Assert.assertEquals(savedTrip.getDestination(), command.getDestination());
-        Assert.assertEquals(savedTrip.getStartDate().toString(), command.getStartDate());
-        Assert.assertEquals(savedTrip.getEndDate().toString(), command.getEndDate());
+        Assert.assertEquals(savedTrip.getOrigin(), command.origin());
+        Assert.assertEquals(savedTrip.getDestination(), command.destination());
+        Assert.assertEquals(savedTrip.getStartDate().toString(), command.startDate());
+        Assert.assertEquals(savedTrip.getEndDate().toString(), command.endDate());
     }
 
     @Test

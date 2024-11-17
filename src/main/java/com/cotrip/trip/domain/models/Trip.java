@@ -1,16 +1,15 @@
 package com.cotrip.trip.domain.models;
 
 import com.cotrip.trip.domain.exceptions.InvalidTripDateException;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "trips")
+@Table(name = "trip")
 public class Trip {
     @Id
     private String id;
@@ -27,7 +26,15 @@ public class Trip {
     @Column
     private LocalDate endDate;
 
-    protected Trip() {
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    private List<Transport> transports;
+
+    public Trip() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public Trip(String origin, String destination, LocalDate startDate, LocalDate endDate) {
@@ -41,6 +48,7 @@ public class Trip {
 
         this.startDate = startDate;
         this.endDate = endDate;
+        this.transports = new ArrayList<>();
     }
 
     public String getId() {
@@ -62,4 +70,13 @@ public class Trip {
     public LocalDate getEndDate() {
         return endDate;
     }
+
+    public List<Transport> getTransports() {
+        return transports;
+    }
+
+    public void addTransport(Transport transport) {
+        transports.add(transport);
+    }
 }
+

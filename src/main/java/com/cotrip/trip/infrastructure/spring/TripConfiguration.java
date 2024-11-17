@@ -1,6 +1,7 @@
 package com.cotrip.trip.infrastructure.spring;
 
 import com.cotrip.trip.application.ports.TripRepository;
+import com.cotrip.trip.application.usecases.AddTransportCommandHandler;
 import com.cotrip.trip.application.usecases.CreateTripCommandHandler;
 import com.cotrip.trip.infrastructure.persistence.SqlTripRepository;
 import jakarta.persistence.EntityManager;
@@ -17,5 +18,10 @@ public class TripConfiguration {
     @Bean
     public CreateTripCommandHandler createTripCommandHandler(TripRepository tripRepository) {
         return new CreateTripCommandHandler(tripRepository);
+    }
+
+    @Bean
+    public AddTransportCommandHandler addTransportCommandHandler(TripRepository tripRepository) {
+        return new AddTransportCommandHandler(tripRepository);
     }
 }

@@ -22,14 +22,14 @@ public class CreateTripCommandHandler implements Command.Handler<CreateTripComma
         LocalDate endDate;
 
         try {
-            startDate = LocalDate.parse(command.getStartDate(), dateFormatter);
-            endDate = LocalDate.parse(command.getEndDate(), dateFormatter);
+            startDate = LocalDate.parse(command.startDate(), dateFormatter);
+            endDate = LocalDate.parse(command.endDate(), dateFormatter);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date format. Please use yyyy-MM-dd.");
         }
 
-        var trip = new Trip(command.getOrigin(),
-                command.getDestination(),
+        var trip = new Trip(command.origin(),
+                command.destination(),
                 startDate,
                 endDate);
 
