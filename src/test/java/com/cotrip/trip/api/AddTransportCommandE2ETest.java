@@ -2,15 +2,15 @@ package com.cotrip.trip.api;
 
 import com.cotrip.CotripBackendApplication;
 import com.cotrip.trip.api.dtos.AddTransportDTO;
-import com.cotrip.trip.api.dtos.AddTransportPlaceDTO;
-import com.cotrip.trip.api.dtos.AddTransportPriceDTO;
+import com.cotrip.trip.api.dtos.AddPlaceDTO;
+import com.cotrip.trip.api.dtos.AddPriceDTO;
 import com.cotrip.trip.application.ports.TripRepository;
 import com.cotrip.trip.domain.models.Currency;
 import com.cotrip.trip.domain.models.Journey;
 import com.cotrip.trip.domain.models.TransportType;
 import com.cotrip.trip.domain.models.Trip;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest
@@ -48,8 +47,8 @@ public class AddTransportCommandE2ETest {
 
         var trip = new Trip("Paris",
                 "London",
-                LocalDate.of(2024, 12, 3),
-                LocalDate.of(2024, 12, 8));
+                "2022-12-03",
+                "2022-12-08");
 
         tripRepository.save(trip);
         tripId = trip.getId();
@@ -62,12 +61,12 @@ public class AddTransportCommandE2ETest {
                 "BUS",
                 "INWARD",
                 "2024-11-01T11:00:00",
-                new AddTransportPlaceDTO(
+                new AddPlaceDTO(
                         "Victoria Coach Station, 164 Buckingham Palace Rd",
                         "London",
                         "SW1W 9TP",
                         "United Kingdom"),
-                new AddTransportPriceDTO(
+                new AddPriceDTO(
                         "GBP", 34));
 
         var response = mockMvc
@@ -82,16 +81,16 @@ public class AddTransportCommandE2ETest {
 
         var transport = tripWithTransport.getTransports().get(0);
 
-        Assert.assertNotNull(transport);
-        Assert.assertEquals(TransportType.BUS, transport.getType());
-        Assert.assertEquals(Journey.INWARD, transport.getJourney());
-        Assert.assertEquals(LocalDateTime.parse("2024-11-01T11:00:00"), transport.getDate());
-        Assert.assertEquals("Victoria Coach Station, 164 Buckingham Palace Rd", transport.getPlace().getAddress());
-        Assert.assertEquals("London", transport.getPlace().getCity());
-        Assert.assertEquals("SW1W 9TP", transport.getPlace().getZipCode());
-        Assert.assertEquals("United Kingdom", transport.getPlace().getCountry());
-        Assert.assertEquals(Currency.GBP, transport.getPrice().getCurrency());
-        Assert.assertEquals(0, BigDecimal.valueOf(34.0).compareTo(transport.getPrice().getAmount()));
+        Assertions.assertNotNull(transport);
+        Assertions.assertEquals(TransportType.BUS, transport.getType());
+        Assertions.assertEquals(Journey.INWARD, transport.getJourney());
+        Assertions.assertEquals(LocalDateTime.parse("2024-11-01T11:00:00"), transport.getDate());
+        Assertions.assertEquals("Victoria Coach Station, 164 Buckingham Palace Rd", transport.getPlace().getAddress());
+        Assertions.assertEquals("London", transport.getPlace().getCity());
+        Assertions.assertEquals("SW1W 9TP", transport.getPlace().getZipCode());
+        Assertions.assertEquals("United Kingdom", transport.getPlace().getCountry());
+        Assertions.assertEquals(Currency.GBP, transport.getPrice().getCurrency());
+        Assertions.assertEquals(0, BigDecimal.valueOf(34.0).compareTo(transport.getPrice().getAmount()));
     }
 
     @Test
@@ -100,15 +99,15 @@ public class AddTransportCommandE2ETest {
                 "BUS",
                 "INWARD",
                 "2024-11-01T11:00:00",
-                new AddTransportPlaceDTO(
+                new AddPlaceDTO(
                         "Victoria Coach Station, 164 Buckingham Palace Rd",
                         "London",
                         "SW1W 9TP",
                         "United Kingdom"),
-                new AddTransportPriceDTO(
+                new AddPriceDTO(
                         "GBP", 34));
 
-        var response = mockMvc
+        mockMvc
                 .perform(MockMvcRequestBuilders.post("/trips/non-existing-trip-id/add-transport")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto))

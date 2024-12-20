@@ -4,7 +4,7 @@ import an.awesome.pipelinr.Command;
 import an.awesome.pipelinr.Voidy;
 import com.cotrip.trip.application.ports.TripRepository;
 import com.cotrip.trip.domain.exceptions.TripNotFoundException;
-import com.cotrip.trip.domain.models.Transport;
+import com.cotrip.trip.domain.models.*;
 
 public class AddTransportCommandHandler implements Command.Handler<AddTransportCommand, Voidy> {
     private final TripRepository tripRepository;
@@ -22,8 +22,8 @@ public class AddTransportCommandHandler implements Command.Handler<AddTransportC
         var newTransport = new Transport(command.type(),
                 command.journey(),
                 command.date(),
-                command.place(),
-                command.price());
+                new Place(command.address(), command.city(), command.zipCode(), command.country()),
+                new Money(command.priceAmount(), command.priceCurrency()));
 
         trip.addTransport(newTransport);
         tripRepository.update(trip);

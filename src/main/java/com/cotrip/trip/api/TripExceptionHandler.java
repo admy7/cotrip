@@ -1,7 +1,8 @@
 package com.cotrip.trip.api;
 
 import com.cotrip.core.api.ErrorResponse;
-import com.cotrip.trip.domain.exceptions.InvalidTripDateException;
+import com.cotrip.trip.domain.exceptions.InvalidDateException;
+import com.cotrip.trip.domain.exceptions.InvalidTripItineraryException;
 import com.cotrip.trip.domain.exceptions.TripNotFoundException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Order(1)
 public class TripExceptionHandler {
 
-    @ExceptionHandler(InvalidTripDateException.class)
+    @ExceptionHandler(InvalidTripItineraryException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleInvalidTripDateException(InvalidTripDateException ex) {
+    public ResponseEntity<ErrorResponse> handleInvalidTripItineraryException(InvalidDateException ex) {
+        var errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidDateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleInvalidTripDateException(InvalidDateException ex) {
         var errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }

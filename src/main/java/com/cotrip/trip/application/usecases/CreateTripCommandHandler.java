@@ -11,27 +11,17 @@ import java.time.format.DateTimeParseException;
 
 public class CreateTripCommandHandler implements Command.Handler<CreateTripCommand, IdResponse> {
     private final TripRepository tripRepository;
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public CreateTripCommandHandler(TripRepository tripRepository) {
         this.tripRepository = tripRepository;
     }
 
     public IdResponse handle(CreateTripCommand command) {
-        LocalDate startDate;
-        LocalDate endDate;
-
-        try {
-            startDate = LocalDate.parse(command.startDate(), dateFormatter);
-            endDate = LocalDate.parse(command.endDate(), dateFormatter);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date format. Please use yyyy-MM-dd.");
-        }
 
         var trip = new Trip(command.origin(),
                 command.destination(),
-                startDate,
-                endDate);
+                command.startDate(),
+                command.endDate());
 
         tripRepository.save(trip);
 

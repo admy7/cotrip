@@ -1,8 +1,7 @@
 package com.cotrip.trip.application.usecases;
 
 import com.cotrip.trip.application.ports.TripRepository;
-import com.cotrip.trip.application.usecases.CreateTripCommand;
-import com.cotrip.trip.application.usecases.CreateTripCommandHandler;
+import com.cotrip.trip.domain.exceptions.InvalidDateException;
 import com.cotrip.trip.infrastructure.persistence.InMemoryTripRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,8 +49,8 @@ public class CreateTripCommandTest {
         );
         var handler = new CreateTripCommandHandler(tripRepository);
 
-        var message = Assert.assertThrows(IllegalArgumentException.class, () -> handler.handle(command));
+        var message = Assert.assertThrows(InvalidDateException.class, () -> handler.handle(command));
 
-        Assert.assertEquals("Invalid date format. Please use yyyy-MM-dd.", message.getMessage());
+        Assert.assertEquals("Trip: Invalid date format. Format must be YYYY-MM-DD.", message.getMessage());
     }
 }

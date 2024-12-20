@@ -1,9 +1,12 @@
 package com.cotrip.trip.domain.models;
 
+import com.cotrip.trip.domain.exceptions.InvalidDateException;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
 
 @Entity
 @Table(name = "transport")
@@ -35,13 +38,23 @@ public class Transport {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Transport(TransportType type, Journey journey, LocalDateTime date, Place place, Money price) {
+    public Transport(String type, String journey, String date, Place place, Money price) {
+        requireValidDateTime(date);
+
         this.id = UUID.randomUUID().toString();
-        this.type = type;
-        this.journey = journey;
-        this.date = date;
+        this.type = TransportType.valueOf(type.toUpperCase());
+        this.journey = Journey.valueOf(journey.toUpperCase());
+        this.date = LocalDateTime.parse(date, ISO_DATE_TIME);
         this.place = place;
         this.price = price;
+    }
+
+    private void requireValidDateTime(String date) {
+        try {
+            LocalDateTime.parse(date, ISO_DATE_TIME);
+        } catch (Exception e) {
+            throw new InvalidDateException("Invalid date time format. It must be YYYY-MM-DDTHH:mm:ss", this.getClass());
+        }
     }
 
     public Place getPlace() {

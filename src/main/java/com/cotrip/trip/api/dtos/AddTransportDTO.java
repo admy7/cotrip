@@ -9,6 +9,6 @@ public record AddTransportDTO(
         String journey,
         @NotBlank(message = "Date is mandatory")
         String date,
-        AddTransportPlaceDTO place,
-        AddTransportPriceDTO price) {
+        AddPlaceDTO place,
+        AddPriceDTO price) {
 }

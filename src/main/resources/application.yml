@@ -18,5 +18,9 @@ spring:
       show-sql: false
       database-platform: org.hibernate.dialect.PostgreSQLDialect
       database: postgresql
+logging:
+    level:
+      org:
+        springframework=DEBUG:
 
 

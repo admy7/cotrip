@@ -10,9 +10,9 @@ public class Money {
 
     private Currency currency;
 
-    public Money(double amount, Currency currency) {
+    public Money(double amount, String currency) {
         this.amount = BigDecimal.valueOf(amount);
-        this.currency = currency;
+        this.currency = Currency.valueOf(currency);
     }
 
     public Money() {

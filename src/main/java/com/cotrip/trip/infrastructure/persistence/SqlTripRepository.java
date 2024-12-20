@@ -4,7 +4,6 @@ import com.cotrip.trip.application.ports.TripRepository;
 import com.cotrip.trip.domain.models.Trip;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 

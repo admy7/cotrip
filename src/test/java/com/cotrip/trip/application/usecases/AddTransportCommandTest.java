@@ -9,8 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class AddTransportCommandTest {
     private final TripRepository tripRepository = new InMemoryTripRepository();
@@ -21,8 +19,8 @@ public class AddTransportCommandTest {
        tripRepository.deleteAll();
        var trip = new Trip("Paris",
                "London",
-               LocalDate.of(2024, 11, 6),
-               LocalDate.of(2024, 11, 10));
+               "2024-11-06",
+               "2024-11-10");
 
        tripId = trip.getId();
        tripRepository.save(trip);
@@ -32,12 +30,15 @@ public class AddTransportCommandTest {
     void shouldAddTransportToTrip() {
         var command = new AddTransportCommand(
                 tripId,
-                TransportType.PLANE,
-                Journey.OUTWARD,
-                LocalDateTime.of(2024, 11, 6, 10, 30),
-                new Place("8 Avenue des Champs-Élysées", "Paris", "75000", "France"),
-                new Money(350, Currency.EUR)
-        );
+                "Plane",
+                "Outward",
+                "2024-11-06T10:30:00",
+                "8 Avenue des Champs-Élysées",
+                "Paris",
+                "75000",
+                "France",
+                350,
+                "EUR");
 
         var handler = new AddTransportCommandHandler(tripRepository);
 
@@ -69,12 +70,15 @@ public class AddTransportCommandTest {
     void whenTripDoesNotExist_ShouldThrow() {
         var command = new AddTransportCommand(
                 "non-existing-trip-id",
-                TransportType.PLANE,
-                Journey.OUTWARD,
-                LocalDateTime.of(2024, 11, 6, 10, 30),
-                new Place("8 Avenue des Champs-Élysées", "Paris", "75000", "France"),
-                new Money(350, Currency.EUR)
-        );
+                "Plane",
+                "Outward",
+                "2024-11-06T10:30:00",
+                "8 Avenue des Champs-Élysées",
+                "Paris",
+                "75000",
+                "France",
+                350,
+                "EUR");
 
         var handler = new AddTransportCommandHandler(tripRepository);
 
