@@ -86,6 +86,6 @@ public class CreateTripCommandE2ETest {
         var errorResponse = objectMapper.readValue(response.getResponse().getContentAsString(), ErrorResponse.class);
 
         Assert.assertEquals(400, errorResponse.getStatus());
-        Assert.assertEquals("Invalid date format. Please use yyyy-MM-dd.", errorResponse.getMessage());
+        Assert.assertEquals("Trip: Invalid date format. Format must be YYYY-MM-DD.", errorResponse.getMessage());
     }
 }
