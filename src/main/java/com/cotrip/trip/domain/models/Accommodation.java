@@ -1,88 +1,84 @@
 package com.cotrip.trip.domain.models;
 
+import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
+
 import com.cotrip.trip.domain.exceptions.InvalidDateException;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.UUID;
 
-import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
-
 @Entity
 @Table(name = "accommodation")
 public class Accommodation {
-    @Id
-    private String id;
+  @Id private String id;
 
-    @Column
-    private String name;
+  @Column private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "place_id")
-    private Place place;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "place_id")
+  private Place place;
 
-    @Column
-    private LocalDateTime startDate;
+  @Column private LocalDateTime startDate;
 
-    @Column
-    private LocalDateTime endDate;
+  @Column private LocalDateTime endDate;
 
-    private Money price;
+  private Money price;
 
-    @ManyToOne
-    @JoinColumn(name = "trip_id")
-    private Trip trip;
+  @ManyToOne
+  @JoinColumn(name = "trip_id")
+  private Trip trip;
 
-    public Accommodation(String name, Place place, String startDate, String endDate, Money price) {
-        requireValidDates(startDate, endDate);
+  public Accommodation(String name, Place place, String startDate, String endDate, Money price) {
+    requireValidDates(startDate, endDate);
 
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.place = place;
-        this.startDate = LocalDateTime.parse(startDate, ISO_DATE_TIME);
-        this.endDate = LocalDateTime.parse(endDate, ISO_DATE_TIME);
-        this.price = price;
+    this.id = UUID.randomUUID().toString();
+    this.name = name;
+    this.place = place;
+    this.startDate = LocalDateTime.parse(startDate, ISO_DATE_TIME);
+    this.endDate = LocalDateTime.parse(endDate, ISO_DATE_TIME);
+    this.price = price;
+  }
+
+  private void requireValidDates(String startDate, String endDate) {
+    try {
+      var parsedStartDate = LocalDateTime.parse(startDate, ISO_DATE_TIME);
+      var parsedEndDate = LocalDateTime.parse(endDate, ISO_DATE_TIME);
+
+      if (parsedEndDate.isBefore(parsedStartDate)) {
+        throw new InvalidDateException("End date must be after start date", this.getClass());
+      }
+    } catch (DateTimeParseException e) {
+      throw new InvalidDateException(
+          "Invalid date time format. It must be YYYY-MM-DDTHH:mm:ss", this.getClass());
     }
+  }
 
-    private void requireValidDates(String startDate, String endDate) {
-        try {
-            var parsedStartDate = LocalDateTime.parse(startDate, ISO_DATE_TIME);
-            var parsedEndDate = LocalDateTime.parse(endDate, ISO_DATE_TIME);
+  public Accommodation() {
+    this.id = UUID.randomUUID().toString();
+  }
 
-            if (parsedEndDate.isBefore(parsedStartDate)) {
-                throw new InvalidDateException("End date must be after start date", this.getClass());
-            }
-        } catch (DateTimeParseException e) {
-            throw new InvalidDateException("Invalid date time format. It must be YYYY-MM-DDTHH:mm:ss", this.getClass());
-        }
-    }
+  public String getId() {
+    return id;
+  }
 
-    public Accommodation() {
-        this.id = UUID.randomUUID().toString();
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public Place getPlace() {
+    return place;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public LocalDateTime getStartDate() {
+    return startDate;
+  }
 
-    public Place getPlace() {
-        return place;
-    }
+  public LocalDateTime getEndDate() {
+    return endDate;
+  }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public Money getPrice() {
-        return price;
-    }
+  public Money getPrice() {
+    return price;
+  }
 }

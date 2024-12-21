@@ -8,31 +8,32 @@ import com.cotrip.trip.domain.models.Accommodation;
 import com.cotrip.trip.domain.models.Money;
 import com.cotrip.trip.domain.models.Place;
 
-public class AddAccommodationCommandHandler implements Command.Handler<AddAccommodationCommand, Voidy> {
+public class AddAccommodationCommandHandler
+    implements Command.Handler<AddAccommodationCommand, Voidy> {
 
-    private TripRepository tripRepository;
+  private TripRepository tripRepository;
 
-    public AddAccommodationCommandHandler(TripRepository tripRepository) {
-        this.tripRepository = tripRepository;
-    }
+  public AddAccommodationCommandHandler(TripRepository tripRepository) {
+    this.tripRepository = tripRepository;
+  }
 
-    @Override
-    public Voidy handle(AddAccommodationCommand command) {
-        var trip = tripRepository.findById(command.tripId()).orElseThrow(
-                () -> new TripNotFoundException()
-        );
+  @Override
+  public Voidy handle(AddAccommodationCommand command) {
+    var trip =
+        tripRepository.findById(command.tripId()).orElseThrow(() -> new TripNotFoundException());
 
-        var newAccommodation = new Accommodation(
-                command.name(),
-                new Place(command.address(), command.city(), command.zipCode(), command.country()),
-                command.startDate(),
-                command.endDate(),
-                new Money(command.priceAmount(), command.priceCurrency()));
+    var newAccommodation =
+        new Accommodation(
+            command.name(),
+            new Place(command.address(), command.city(), command.zipCode(), command.country()),
+            command.startDate(),
+            command.endDate(),
+            new Money(command.priceAmount(), command.priceCurrency()));
 
-        trip.addAccommodation(newAccommodation);
+    trip.addAccommodation(newAccommodation);
 
-        tripRepository.update(trip);
+    tripRepository.update(trip);
 
-        return new Voidy();
-    }
+    return new Voidy();
+  }
 }

@@ -17,57 +17,56 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/trips")
 public class TripController {
-    private final Pipeline pipeline;
+  private final Pipeline pipeline;
 
-    public TripController(Pipeline pipeline) {
-        this.pipeline = pipeline;
-    }
+  public TripController(Pipeline pipeline) {
+    this.pipeline = pipeline;
+  }
 
-    @PostMapping
-    public ResponseEntity<IdResponse> createTrip(@Valid @RequestBody CreateTripDTO dto) {
-        var result = pipeline.send(new CreateTripCommand(
-                dto.origin(),
-                dto.destination(),
-                dto.startDate(),
-                dto.endDate()
-        ));
+  @PostMapping
+  public ResponseEntity<IdResponse> createTrip(@Valid @RequestBody CreateTripDTO dto) {
+    var result =
+        pipeline.send(
+            new CreateTripCommand(dto.origin(), dto.destination(), dto.startDate(), dto.endDate()));
 
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-    }
+    return new ResponseEntity<>(result, HttpStatus.CREATED);
+  }
 
-    @PostMapping("{tripId}/add-transport")
-    public ResponseEntity<Voidy> addTransport(@PathVariable String tripId,
-                                              @Valid @RequestBody AddTransportDTO dto) {
-        pipeline.send(new AddTransportCommand(
-                tripId,
-                dto.type(),
-                dto.journey(),
-                dto.date(),
-                dto.place().address(),
-                dto.place().city(),
-                dto.place().zipCode(),
-                dto.place().country(),
-                dto.price().amount(),
-                dto.price().currency()));
+  @PostMapping("{tripId}/add-transport")
+  public ResponseEntity<Voidy> addTransport(
+      @PathVariable String tripId, @Valid @RequestBody AddTransportDTO dto) {
+    pipeline.send(
+        new AddTransportCommand(
+            tripId,
+            dto.type(),
+            dto.journey(),
+            dto.date(),
+            dto.place().address(),
+            dto.place().city(),
+            dto.place().zipCode(),
+            dto.place().country(),
+            dto.price().amount(),
+            dto.price().currency()));
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 
-    @PostMapping("/{tripId}/add-accommodation")
-    public ResponseEntity<Voidy> addAccommodation(@PathVariable String tripId,
-                                                  @Valid @RequestBody AddAccommodationDTO dto) {
-        pipeline.send(new AddAccommodationCommand(
-                tripId,
-                dto.name(),
-                dto.place().address(),
-                dto.place().city(),
-                dto.place().zipCode(),
-                dto.place().country(),
-                dto.startDate(),
-                dto.endDate(),
-                dto.price().amount(),
-                dto.price().currency()));
+  @PostMapping("/{tripId}/add-accommodation")
+  public ResponseEntity<Voidy> addAccommodation(
+      @PathVariable String tripId, @Valid @RequestBody AddAccommodationDTO dto) {
+    pipeline.send(
+        new AddAccommodationCommand(
+            tripId,
+            dto.name(),
+            dto.place().address(),
+            dto.place().city(),
+            dto.place().zipCode(),
+            dto.place().country(),
+            dto.startDate(),
+            dto.endDate(),
+            dto.price().amount(),
+            dto.price().currency()));
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 }

@@ -10,14 +10,14 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration(proxyBeanMethods = false)
 class CoTripTestConfiguration {
 
-    @Bean
-    @ServiceConnection
-    PostgreSQLContainer<?> postgresContainer() {
-        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"));
-    }
+  @Bean
+  @ServiceConnection
+  PostgreSQLContainer<?> postgresContainer() {
+    return new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"));
+  }
 
-    @Bean
-    ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+  @Bean
+  ObjectMapper objectMapper() {
+    return new ObjectMapper();
+  }
 }
