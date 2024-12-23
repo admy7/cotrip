@@ -1,6 +1,6 @@
 package com.cotrip.trip.api;
 
-import com.cotrip.CotripBackendApplication;
+import com.cotrip.CoTripTestConfiguration;
 import com.cotrip.core.api.ErrorResponse;
 import com.cotrip.trip.api.dtos.CreateTripDTO;
 import com.cotrip.trip.application.ports.TripRepository;
@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(CotripBackendApplication.class)
+@Import(CoTripTestConfiguration.class)
 public class CreateTripCommandE2ETest {
 
   @Autowired private MockMvc mockMvc;

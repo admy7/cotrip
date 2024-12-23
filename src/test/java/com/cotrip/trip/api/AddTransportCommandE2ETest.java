@@ -1,6 +1,6 @@
 package com.cotrip.trip.api;
 
-import com.cotrip.CotripBackendApplication;
+import com.cotrip.CoTripTestConfiguration;
 import com.cotrip.trip.api.dtos.AddPlaceDTO;
 import com.cotrip.trip.api.dtos.AddPriceDTO;
 import com.cotrip.trip.api.dtos.AddTransportDTO;
@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(CotripBackendApplication.class)
+@Import(CoTripTestConfiguration.class)
 public class AddTransportCommandE2ETest {
 
   @Autowired private MockMvc mockMvc;

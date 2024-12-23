@@ -15,9 +15,7 @@ services:
     restart: unless-stopped
 
   cotrip-api:
-    build:
-        context: .
-        dockerfile: Dockerfile
+    image:
     depends_on:
       - postgres
     environment:
