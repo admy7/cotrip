@@ -18,17 +18,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'corretto'
+          java-version: "21"
+          distribution: "corretto"
 
       - name: Start Docker Service
         run: sudo service docker start
 
       - name: Run tests
-        run: mvn test
+        run: ./mvnw clean test
 
   format:
     runs-on: ubuntu-latest
@@ -42,8 +42,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'corretto'
+          java-version: "21"
+          distribution: "corretto"
 
       - name: Run Spotless check
-        run: mvn spotless:check
+        run: ./mvnw spotless:check

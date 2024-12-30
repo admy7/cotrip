@@ -1,11 +1,11 @@
 FROM maven:3.9.9-amazoncorretto-21 AS build
 
 WORKDIR /build
-COPY ./backend/pom.xml .
+COPY ./pom.xml ./
 
 RUN mvn dependency:go-offline
 
-COPY ./backend/src ./src
+COPY ./src ./src
 
 RUN mvn clean package -DskipTests
 
@@ -24,6 +24,6 @@ RUN JAR_FILE=$(ls /app/cotrip-backend-*.jar) && \
 ENV _DB_URL=${DB_URL}
 ENV _PROFILE=${PROFILE}
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD java -jar -Dspring.profiles.active=${_PROFILE} -Dspring.datasource.url=${_DB_URL} /app/app.jar
