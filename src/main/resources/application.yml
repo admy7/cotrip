@@ -5,10 +5,9 @@ spring:
         servlet:
           path: /api/v1
     datasource:
-        url: jdbc:postgresql://localhost:5432/db
-        username: cotrip
-        password: cotrip
-        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/cotrip
+        username: username
+        password: password
     jpa:
       hibernate:
         ddl-auto: create
@@ -16,11 +15,12 @@ spring:
         hibernate:
           format_sql: true
       show-sql: false
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
       database: postgresql
 logging:
     level:
       org:
         springframework=DEBUG:
+server:
+  port: 8081
 
 

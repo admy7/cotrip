@@ -15,24 +15,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Order(1)
 public class TripExceptionHandler {
 
-    @ExceptionHandler(InvalidTripItineraryException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleInvalidTripItineraryException(InvalidDateException ex) {
-        var errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
+  @ExceptionHandler(InvalidTripItineraryException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<ErrorResponse> handleInvalidTripItineraryException(
+      InvalidDateException ex) {
+    var errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(InvalidDateException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleInvalidTripDateException(InvalidDateException ex) {
-        var errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
+  @ExceptionHandler(InvalidDateException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<ErrorResponse> handleInvalidTripDateException(InvalidDateException ex) {
+    var errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(TripNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorResponse> handleTripNotFoundException(TripNotFoundException ex) {
-        var errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
+  @ExceptionHandler(TripNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public ResponseEntity<ErrorResponse> handleTripNotFoundException(TripNotFoundException ex) {
+    var errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+  }
 }

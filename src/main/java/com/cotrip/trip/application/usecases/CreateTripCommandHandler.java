@@ -5,26 +5,20 @@ import com.cotrip.trip.application.ports.TripRepository;
 import com.cotrip.trip.domain.models.Trip;
 import com.cotrip.trip.domain.viewmodels.IdResponse;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 public class CreateTripCommandHandler implements Command.Handler<CreateTripCommand, IdResponse> {
-    private final TripRepository tripRepository;
+  private final TripRepository tripRepository;
 
-    public CreateTripCommandHandler(TripRepository tripRepository) {
-        this.tripRepository = tripRepository;
-    }
+  public CreateTripCommandHandler(TripRepository tripRepository) {
+    this.tripRepository = tripRepository;
+  }
 
-    public IdResponse handle(CreateTripCommand command) {
+  public IdResponse handle(CreateTripCommand command) {
 
-        var trip = new Trip(command.origin(),
-                command.destination(),
-                command.startDate(),
-                command.endDate());
+    var trip =
+        new Trip(command.origin(), command.destination(), command.startDate(), command.endDate());
 
-        tripRepository.save(trip);
+    tripRepository.save(trip);
 
-        return new IdResponse(trip.getId());
-    }
+    return new IdResponse(trip.getId());
+  }
 }
