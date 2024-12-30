@@ -7,6 +7,10 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -16,7 +20,7 @@ jobs:
         with:
           java-version: "21"
           distribution: "corretto"
-      
+
       - name: Extract project version
         id: extract_version
         run: echo "VERSION=$(./mvnw -q -Dexec.executable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
