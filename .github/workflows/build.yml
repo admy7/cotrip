@@ -38,4 +38,4 @@ jobs:
           file: Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cotrip-backend:{{ steps.extract-version.outputs.VERSION }},${{ secrets.DOCKERHUB_USERNAME }}/cotrip-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cotrip-backend:${{ steps.extract-version.outputs.VERSION }},${{ secrets.DOCKERHUB_USERNAME }}/cotrip-backend:latest
