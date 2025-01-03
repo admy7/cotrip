@@ -1,3 +1,3 @@
 ## CoTrip
 
-CoTrip is the application allowing you to plan your trips together and share memories.
+Backend of the CoTrip application, a collaborative travel platform, enabling users to plan and organize trips together.

@@ -1,26 +1,24 @@
 spring:
-    application:
-        name: cotrip-backend
-    mvc:
-        servlet:
-          path: /api/v1
-    datasource:
-        url: jdbc:postgresql://localhost:5432/cotrip
-        username: username
-        password: password
-    jpa:
+  application:
+    name: cotrip-backend
+  mvc:
+    servlet:
+      path: /api/v1
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/cotrip}
+    username: ${DB_USERNAME:cotrip}
+    password: ${DB_PASSWORD:cotrip}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
       hibernate:
-        ddl-auto: create
-      properties:
-        hibernate:
-          format_sql: true
-      show-sql: false
-      database: postgresql
+        format_sql: true
+    show-sql: false
+    database: postgresql
 logging:
-    level:
-      org:
-        springframework=DEBUG:
+  level:
+    org:
+      springframework=DEBUG:
 server:
   port: 8081
-
-
