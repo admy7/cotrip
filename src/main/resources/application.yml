@@ -16,6 +16,12 @@ spring:
         format_sql: true
     show-sql: false
     database: postgresql
+  docker:
+    compose:
+      file: ./docker-compose.dev.yml
+application:
+  cors:
+    origins: ${FRONTEND_URL:http://localhost:5173}
 logging:
   level:
     org:
