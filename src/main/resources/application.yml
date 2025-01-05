@@ -6,8 +6,8 @@ spring:
       path: /api/v1
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/cotrip}
-    username: ${DB_USERNAME:cotrip}
-    password: ${DB_PASSWORD:cotrip}
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:password}
   jpa:
     hibernate:
       ddl-auto: create
@@ -16,9 +16,6 @@ spring:
         format_sql: true
     show-sql: false
     database: postgresql
-  docker:
-    compose:
-      file: ./docker-compose.dev.yml
 application:
   cors:
     origins: ${FRONTEND_URL:http://localhost:5173}
