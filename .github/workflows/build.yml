@@ -43,3 +43,11 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cotrip-backend:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/cotrip-backend:latest
+
+      - name: Trigger Deployment
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GH_ACCESS_TOKEN }}" \
+            -H "Accept: application/vnd.github.everest-preview+json" \
+            https://api.github.com/repos/cotrip-deployment/dispatches \
+            -d '{"event_type": "trigger-deploy"}'
