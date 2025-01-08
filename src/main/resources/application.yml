@@ -24,4 +24,4 @@ logging:
     org:
       springframework=DEBUG:
 server:
-  port: 8081
+  port: 8080

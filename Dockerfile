@@ -18,6 +18,6 @@ COPY --from=build /build/target/cotrip-backend-*.jar /app
 RUN JAR_FILE=$(ls /app/cotrip-backend-*.jar) && \
     ln -s $JAR_FILE /app/app.jar
 
-EXPOSE 8081
+EXPOSE 8080
 
 CMD java -jar /app/app.jar
